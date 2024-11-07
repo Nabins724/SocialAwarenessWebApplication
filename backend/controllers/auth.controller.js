@@ -15,25 +15,25 @@ export const signup = async (req, res) => {
 	try {
 		const { fullName, username, email, password } = req.body;
 
-        // Using regex to check if the email is valid.
+		// Using regex to check if the email is valid.
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(email)) {
 			return res.status(400).json({ error: "Invalid email format" });
 		}
 
-        // Checking if the username already exists in the platform/database.
+		// Checking if the username already exists in the platform/database.
 		const existingUser = await User.findOne({ username });
 		if (existingUser) {
 			return res.status(400).json({ error: "Username is already taken" });
 		}
-        
-        // Checking if the email already exists in the platform/database.
+
+		// Checking if the email already exists in the platform/database.
 		const existingEmail = await User.findOne({ email });
 		if (existingEmail) {
 			return res.status(400).json({ error: "Email is already taken" });
 		}
-        
-        // Ensuring the password is atleast 6 characters long for security.
+
+		// Ensuring the password is atleast 6 characters long for security.
 		if (password.length < 8) {
 			return res.status(400).json({ error: "Password must be at least 8 characters long" });
 		}
@@ -49,7 +49,7 @@ export const signup = async (req, res) => {
 			password: hashedPassword,
 		});
 
-        // Creating new user if all the conditions are met to th edatabase
+		// Creating new user if all the conditions are met to th edatabase
 		if (newUser) {
 			generateTokenAndSetCookie(newUser._id, res);
 			await newUser.save();
@@ -59,19 +59,22 @@ export const signup = async (req, res) => {
 				fullName: newUser.fullName,
 				username: newUser.username,
 				email: newUser.email,
+				followers: newUser.followers,
+				following: newUser.following,
+				profileImg: newUser.profileImg,
 
 			});
 		} else {
 			res.status(400).json({ error: "Invalid Data, please recheck the details." });
 		}
 	} catch (error) {
-		console.log("Error in signup controller", error.message);
+		console.log("Error in signup controller: Check auth controller", error.message);
 		res.status(500).json({ error: "Server Error Please try again later." });
 	}
 };
 
 
-// Login in function.
+// Login in function
 export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
@@ -89,6 +92,9 @@ export const login = async (req, res) => {
 			fullName: user.fullName,
 			username: user.username,
 			email: user.email,
+			followers: user.followers,
+			following: user.following,
+			profileImg: user.profileImg,
 		});
 	} catch (error) {
 		console.log("Error in login controller.", error.message);
