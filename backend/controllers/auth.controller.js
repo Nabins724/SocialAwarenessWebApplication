@@ -74,12 +74,12 @@ export const signup = async (req, res) => {
 // Login in function.
 export const login = async (req, res) => {
 	try {
-		const { username, password } = req.body;
-		const user = await User.findOne({ username });
-		const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+		const { email, password } = req.body;
+		const user = await User.findOne({ email });
+		const isPasswordValid = await bcrypt.compare(password, user?.password || "");
 
-		if (!user || !isPasswordCorrect) {
-			return res.status(400).json({ error: "Please recheck your username or password" });
+		if (!user || !isPasswordValid) {
+			return res.status(400).json({ error: "Please recheck your email or password" });
 		}
 
 		generateTokenAndSetCookie(user._id, res);
@@ -91,7 +91,7 @@ export const login = async (req, res) => {
 			email: user.email,
 		});
 	} catch (error) {
-		console.log("Error in login controller", error.message);
+		console.log("Error in login controller.", error.message);
 		res.status(500).json({ error: "Server Error: Please try again." });
 	}
 };
@@ -99,7 +99,6 @@ export const login = async (req, res) => {
 
 
 // Logout function
-/*
 export const logout = async (req, res) => {
 	try {
 		res.cookie("jwt", "", { maxAge: 0 });
@@ -110,15 +109,15 @@ export const logout = async (req, res) => {
 	}
 };
 
+
 // Log in based on cookie.
+
 export const getMe = async (req, res) => {
 	try {
 		const user = await User.findById(req.user._id).select("-password");
 		res.status(200).json(user);
 	} catch (error) {
-		console.log("Error in getMe cookie controller", error.message);
+		console.log("Error in getMe cookie controller. Check auth controller.", error.message);
 		res.status(500).json({ error: "Server Error: Please log in again." });
 	}
 };
-
-*/

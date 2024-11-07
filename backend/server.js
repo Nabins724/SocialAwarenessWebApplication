@@ -1,6 +1,7 @@
 import path from "path";
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.route.js";
 // import userRoutes from "./routes/user.route.js";
@@ -21,6 +22,8 @@ const __dirname = path.resolve();
 app.use(express.json()); // to parse req.body 
 app.use(express.urlencoded({extended:true}));    // to parse from data (urlencoded)
 
+// For the purpose of protect route. 
+app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 // app.use("/api/users", userRoutes);
