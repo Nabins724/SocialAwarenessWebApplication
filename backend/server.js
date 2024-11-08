@@ -27,8 +27,8 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 // Middlewares
-app.use(express.json()); // to parse req.body 
-app.use(express.urlencoded({extended:true}));    // to parse from data (urlencoded)
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));    
 
 // For the purpose of protect route. 
 app.use(cookieParser());
