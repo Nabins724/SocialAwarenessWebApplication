@@ -4,6 +4,8 @@ import { Link, useNavigate  } from "react-router-dom";
 import { MdOutlineMail } from "react-icons/md";
 import { MdPassword } from "react-icons/md";
 import logo from '../assets/logo/logo.png';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const logoStyle={
 	marginTop: '200px',
@@ -14,27 +16,58 @@ const logoStyle={
  };
 
 const LoginPage = () => {
-
-	// Temporary code for navigation 
-	const navigate = useNavigate();
-	const handleHomePage = () => { navigate('/'); };
-
-
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	});
 
+	const queryClient = useQueryClient();
+
+	const {
+		mutate: 
+		loginMutation,
+		isError,
+		error,
+	} = useMutation({
+		mutationFn: async ({ email, password }) => {
+			try {
+				const res = await fetch("/api/auth/login", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ email, password }),
+				});
+
+				const data = await res.json();
+
+				if (!res.ok) {
+					throw new Error(data.error || "Something went wrong");
+				}
+			} catch (error) {
+				throw new Error(error);
+			}
+		},
+		onSuccess: () => {
+			toast.success("Login Successful. ");
+			{
+
+			}
+			queryClient.invalidateQueries({queryKey: ["authUser"]});
+		},
+	});
+
+
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formData);
+		loginMutation(formData);
 	};
 
 	const handleInputChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
-	const isError = false;
 
 	return (
 		<div className='max-w-screen-xl mx-auto flex h-screen px-10' style={{backgroundColor:'#6AAAD1'}}>
@@ -68,14 +101,14 @@ const LoginPage = () => {
 							value={formData.password}
 						/>
 					</label>
-					<button className='btn rounded-full btn-primary text-white' onClick={handleHomePage}>Login</button>
-					{isError && <p className='text-red-500'>Something went wrong</p>}
+					<button className='btn rounded-full btn-primary text-white' >Login</button>
+					{isError && <p className='text-red-500'>{error.message}</p>}
 				</form>
 				<div className='flex flex-col gap-2 mt-4'>
 					<p className='text-black text-lg'>{"Don't"} have an account?</p>
 					<Link to='/signup'>
 						<button className='btn rounded-full btn-primary text-white btn-outline w-full'>Sign up</button>
-					</Link>
+					</Link>   
 				</div>
 			</div>
 		</div>
