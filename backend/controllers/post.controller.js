@@ -61,7 +61,7 @@ export const deletePost = async (req, res) => {
 	}
 };
 
-// Function to add comment on posts
+// Function to add comment on posts: function is working correctly.
 export const commentOnPost = async (req, res) => {
 	try {
 		const { text } = req.body;
@@ -89,7 +89,7 @@ export const commentOnPost = async (req, res) => {
 	}
 };
 
-// Function to get all posts.
+// Function to get all posts.: function is working correctly.
 export const getAllPosts = async (req, res) => {
 	try {
 		const posts = await Post.find()
@@ -114,7 +114,7 @@ export const getAllPosts = async (req, res) => {
 	}
 };
 
-// Get posts from other users followed by main user.
+// Get posts from other users followed by main user.: Function is operational. 
 export const getFollowingPosts = async (req, res) => {
 	try {
 		const userId = req.user._id;
@@ -142,7 +142,7 @@ export const getFollowingPosts = async (req, res) => {
 };
 
 
-// Getting user posts function.
+// Getting user posts function. Function is operational.
 export const getUserPosts = async (req, res) => {
 
 	try {

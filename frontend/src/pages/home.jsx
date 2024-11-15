@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import Posts from "../components/common/PostsHome.jsx";
+import Posts from "../components/common/Posts.jsx";
+
 import CreatePost from "../pages/home/CreatePost.jsx";
 import NavBar from "../pages/home/NavBar.jsx";
 import LeftPanel from "../components/common/LeftPanel.jsx";

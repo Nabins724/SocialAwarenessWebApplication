@@ -1,7 +1,4 @@
 import { FaRegComment } from "react-icons/fa";
-// import { BiRepost } from "react-icons/bi";
-// import { FaRegHeart } from "react-icons/fa";
-// import { FaRegBookmark } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -23,13 +20,13 @@ const Post = ({ post }) => {
 		e.preventDefault();
 	};
 
-	// const handleLikePost = () => {};
+
 
 	return (
 		<>
 			<div className='flex gap-2 items-start p-4 border-b border-gray-700'>
 				<div className='avatar'>
-					<Link to={`/profile/${postOwner.username}`} className='w-20 rounded-full overflow-hidden'>
+					<Link to={`/profile/${postOwner.username}`} className='w-8 rounded-full overflow-hidden'>
 						<img src={postOwner.profileImg || "/avatar-placeholder.png"} />
 					</Link>
 				</div>
@@ -77,7 +74,7 @@ const Post = ({ post }) => {
 									<div className='flex flex-col gap-3 max-h-60 overflow-auto'>
 										{post.comments.length === 0 && (
 											<p className='text-sm text-slate-500'>
-												Comments Empty. Post a comment!
+												No comments yet.
 											</p>
 										)}
 										{post.comments.map((comment) => (
@@ -124,10 +121,11 @@ const Post = ({ post }) => {
 									<button className='outline-none'>close</button>
 								</form>
 							</dialog>
-							{/* <div className='flex gap-1 items-center group cursor-pointer'>
-								<BiRepost className='w-6 h-6  text-slate-500 group-hover:text-green-500' />
-								<span className='text-sm text-slate-500 group-hover:text-green-500'>0</span>
-							</div> */}
+							{/* <div className='flex gap-1 items-center group cursor-pointer'> */}
+								{/* <BiRepost className='w-6 h-6  text-slate-500 group-hover:text-green-500' /> */}
+								{/* <span className='text-sm text-slate-500 group-hover:text-green-500'>0</span> */}
+							{/* </div> */}
+
 							{/* <div className='flex gap-1 items-center group cursor-pointer' onClick={handleLikePost}>
 								{!isLiked && (
 									<FaRegHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500' />
@@ -139,15 +137,16 @@ const Post = ({ post }) => {
 										isLiked ? "text-pink-500" : ""
 									}`}
 								>
+									{ // THIS IS A COMMENT REMEMBER TO REMOVE IT: The second error is cannot read properties of undefined(reading 'length') }
 									{post.likes.length}
 								</span>
 							</div> */}
 
+							
 						</div>
-
-						{/* <div className='flex w-1/3 justify-end gap-2 items-center'>
-							<FaRegBookmark className='w-4 h-4 text-slate-500 cursor-pointer' />
-						</div> */}
+						{/* <div className='flex w-1/3 justify-end gap-2 items-center'> */}
+							{/* <FaRegBookmark className='w-4 h-4 text-slate-500 cursor-pointer' /> */}
+						{/* </div> */}
 					</div>
 				</div>
 			</div>
