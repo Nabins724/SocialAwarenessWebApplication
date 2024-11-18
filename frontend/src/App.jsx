@@ -13,6 +13,7 @@ function App() {
   const { data: authUser, isLoading } = useQuery({
 		queryKey: ["authUser"],
 		queryFn: async () => {
+			
 			try {
 				const res = await fetch("/api/auth/me");
 				const data = await res.json();
@@ -36,10 +37,10 @@ function App() {
 
     {/* Routing component.  */}
       <Routes>
-				<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/profile/:username' />} />
+				<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/login' />} />
 				<Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to='/login' />} />
 				<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
-				<Route path='/profile/:username' element= { authUser ? <ProfilePage /> : <Navigate to='/login' />} />
+				<Route path= "/profile/:username" element= { authUser ? <ProfilePage /> : <Navigate to='/login' />} />
         <Route path='/aboutus' element={ authUser ? <AboutUs /> : <Navigate to='/login'/>} />
 			</Routes>
       <Toaster />
