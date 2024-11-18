@@ -15,7 +15,6 @@ router.post("/create", protectRoute, createPost);
 router.delete("/:id", protectRoute, deletePost);
 router.post("/comment/:id", protectRoute, commentOnPost);
 router.get("/all", protectRoute, getAllPosts);
-router.get("/following", protectRoute, getFollowingPosts);
 router.get("/user/:username", protectRoute, getUserPosts);
 
 
